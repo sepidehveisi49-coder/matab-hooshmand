@@ -1,0 +1,13 @@
+{
+  "name": "matab-hooshmand",
+  "version": "1.0.0",
+  "private": true,
+  "description": "سامانه نوبت‌دهی و مدیریت مطب - نسخه قابل اجرا در Termux",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
