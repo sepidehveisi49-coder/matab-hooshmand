@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123b45"><title>مطب هوشمند</title>
+<style>
+:root{--navy:#123b45;--teal:#167d80;--bg:#f3f7f7;--line:#dce7e7;--muted:#647579}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Tahoma,Arial,sans-serif;color:#183238}
+header{background:var(--navy);color:white;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+header h1{font-size:20px;margin:0}header small{opacity:.8}.wrap{max-width:1050px;margin:22px auto;padding:0 14px}
+.card{background:white;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 4px 18px #153b450b}
+h2{font-size:17px;margin:0 0 14px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #cbdada;border-radius:10px;font:inherit;background:white;margin:5px 0 12px}
+button{border:0;border-radius:10px;padding:11px 16px;background:var(--teal);color:white;font:inherit;cursor:pointer}
+button.secondary{background:#e7f0f0;color:var(--navy)}button.danger{background:#a43d3d}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.hidden{display:none!important}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}.stat{background:#edf6f5;padding:15px;border-radius:12px}.stat b{display:block;font-size:25px;color:var(--teal);margin-top:7px}
+table{width:100%;border-collapse:collapse;min-width:580px}th,td{text-align:right;padding:11px;border-bottom:1px solid var(--line);font-size:13px}th{color:var(--muted)}
+.tablewrap{overflow:auto}.msg{padding:10px;border-radius:9px;background:#fff3dc;margin:10px 0;color:#694d15}.muted{color:var(--muted);font-size:12px}
+.login{max-width:420px;margin:8vh auto}.brand{font-size:26px;color:var(--teal);font-weight:bold;margin-bottom:8px}
+@media(max-width:520px){header{align-items:flex-start;flex-direction:column}.card{padding:14px}}
+
+@media(max-width:600px){
+#reportRows{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+#reportRows table{width:100%;min-width:560px;border-collapse:collapse}
+#reportRows th,#reportRows td{padding:9px 7px;font-size:12px;white-space:normal;overflow-wrap:anywhere}
+}
+
+
+/* MATAB_MOBILE_REPORT_V2 */
+#reports #reportRows {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+#reports #reportRows table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+}
+#reports #reportRows th,
+#reports #reportRows td {
+  white-space: nowrap;
+  padding: 10px;
+}
+@media(max-width:600px) {
+  #reports #reportSummary {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+  #reports #reportSummary .stat {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  #reports button {
+    width: 100%;
+  }
+}
+
+
+/* MATAB_SUPERADMIN_UI_V2 */
+.sa-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.sa-heading h2{margin-bottom:5px}
+.sa-chip{background:#e6f4f2;color:#126c68;padding:8px 14px;border-radius:30px;font-size:12px;font-weight:bold}
+.sa-detail{margin-top:14px;padding:14px;background:#f4f8f8;border:1px solid var(--line);border-radius:12px}
+.sa-actions{display:flex;gap:7px;flex-wrap:wrap}
+.sa-actions button{padding:8px 11px;font-size:12px}
+.sa-status{display:inline-block;padding:5px 9px;border-radius:20px;background:#e6f4ed;color:#176b43;font-size:12px}
+.sa-status.off{background:#fae9e9;color:#9b3333}
+#superadminPanel table{min-width:720px}
+#superadminPanel input,#superadminPanel select{min-width:110px}
+@media(max-width:600px){
+  .sa-heading{align-items:flex-start}
+  #superadminPanel .card{padding:13px}
+  #superadminPanel .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+</style>
+<style>
+/* MATAB_MOBILE_REPORT_V3 */
+@media screen and (max-width: 768px) {
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+
+  th, td {
+    white-space: nowrap;
+  }
+}
+</style>
+
+
+<style>
+/* MATAB_TABLE_SCROLL_V4 */
+@media screen and (max-width:768px) {
+  .table-scroll {
+    display:block;
+    width:100%;
+    max-width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
+    direction:rtl;
+  }
+  .table-scroll table {
+    display:table;
+    width:max-content;
+    min-width:100%;
+    border-collapse:collapse;
+  }
+  .table-scroll th,
+  .table-scroll td {
+    white-space:nowrap;
+  }
+}
+</style>
+
+</head>
+<body>
+<header><div><h1>سامانه مطب هوشمند</h1><small>مدیریت نوبت و پذیرش بیماران</small></div><div id="who"></div></header>
+<div class="wrap">
+<section id="login" class="card login">
+<div class="brand">مطب هوشمند</div><p class="muted">برای ورود، اطلاعات حساب را وارد کنید.</p>
+<label>نام کاربری</label><input id="username" autocomplete="username">
+<label>رمز عبور</label><input id="password" type="password" autocomplete="current-password">
+<button onclick="login()">ورود به سامانه</button><div id="loginMsg" class="msg hidden"></div>
+</section>
+<section id="app" class="hidden">
+<nav id="nav">
+<button data-role="admin,doctor,reception" onclick="showTab('home')">داشبورد</button><button class="secondary" data-role="admin,doctor,reception" onclick="showTab('booking')">ثبت نوبت</button>
+<button class="secondary" data-role="admin,doctor,reception" onclick="showTab('appointments')">نوبت‌ها</button><button class="secondary" data-role="admin,doctor,reception" onclick="showTab('patients')">بیماران</button><button class="secondary" data-role="admin,doctor,reception" onclick="showTab('calendar')">تقویم</button><button class="secondary" data-role="admin" onclick="showTab('reports')">گزارش‌ها</button>
+<button class="secondary hidden" id="usersNav" onclick="showTab('users')">مدیریت کاربران</button>
+<button class="secondary" id="superadminNav" data-role="superadmin" onclick="showTab('superadminPanel')">مدیریت کل سامانه</button><button class="secondary" onclick="showTab('security')">تغییر رمز</button><button class="secondary" onclick="logout()">خروج</button>
+</nav>
+<div id="home" class="tab" data-role="admin,doctor,reception">
+<div class="card"><h2>خلاصه وضعیت</h2><div class="stats"><div class="stat">تعداد بیماران<b id="sPatients">۰</b></div><div class="stat">کل نوبت‌ها<b id="sAppointments">۰</b></div><div class="stat">نوبت‌های امروز<b id="sToday">۰</b></div></div></div>
+<div class="card"><h2>نوبت‌های پیش‌رو</h2><div id="upcoming" class="muted">در حال دریافت...</div></div>
+</div>
+<div id="booking" class="tab hidden" data-role="admin,doctor,reception"><div class="card"><h2>ثبت نوبت جدید</h2>
+<div class="grid"><div><label>نام بیمار</label><input id="aName" placeholder="نام و نام خانوادگی"></div><div><label>شماره تماس</label><input id="aPhone" inputmode="tel" placeholder="09xxxxxxxxx"></div><div><label>تاریخ</label><input id="aDate" type="date"></div><div><label>ساعت</label><input id="aTime" type="time"></div><div><label>نوع خدمت</label><select id="aService"><option>ویزیت</option><option>مشاوره</option><option>خدمات زیبایی</option><option>پیگیری</option></select></div><div data-role="admin"><label>مبلغ (تومان)</label><input id="aAmount" type="number" min="0" value="0"></div><div data-role="admin"><label>وضعیت پرداخت</label><select id="aPayment"><option>پرداخت نشده</option><option>پرداخت شد</option></select></div></div>
+<button onclick="addAppointment()">ثبت نوبت</button><div id="bookingMsg" class="msg hidden"></div></div></div>
+<div id="appointments" class="tab hidden" data-role="admin,doctor,reception"><div class="card"><h2>فهرست نوبت‌ها</h2><div id="appointmentsList" class="tablewrap"></div></div></div>
+<div id="patients" class="tab hidden" data-role="admin,doctor,reception"><div class="card"><h2>افزودن بیمار</h2><div class="grid"><div><label>نام بیمار</label><input id="pName"></div><div><label>شماره تماس</label><input id="pPhone" inputmode="tel"></div><div><label>کد ملی (اختیاری)</label><input id="pNational"></div></div><div data-role="admin,doctor"><label>یادداشت (اختیاری)</label><textarea id="pNotes" rows="2"></textarea><div class="grid"><div><label>سابقه پزشکی</label><textarea id="pHistory" rows="2"></textarea></div><div><label>حساسیت‌ها</label><textarea id="pAllergies" rows="2"></textarea></div><div><label>داروهای مصرفی</label><textarea id="pMeds" rows="2"></textarea></div></div></div><button onclick="addPatient()">ذخیره بیمار</button><div id="patientMsg" class="msg hidden"></div></div><div class="card"><h2>فهرست بیماران</h2><div id="patientsList" class="tablewrap"></div></div></div>
+<div id="calendar" class="tab hidden" data-role="admin,doctor,reception"><div class="card"><h2>تقویم نوبت‌ها</h2><label>ماه موردنظر</label><input id="calMonth" type="month"><div id="calendarList" class="tablewrap"></div></div></div>
+<div id="reports" class="tab hidden" data-role="admin"><div class="card"><h2>گزارش عملکرد و درآمد</h2><div class="grid"><div><label>از تاریخ</label><input id="reportFrom" type="date"></div><div><label>تا تاریخ</label><input id="reportTo" type="date"></div></div><button onclick="loadReports()">تهیه گزارش</button><div id="reportSummary" class="stats" style="margin-top:14px"></div><div id="reportRows" class="tablewrap"></div><p class="muted">درآمد بر اساس مبلغ و وضعیت پرداخت ثبت‌شده در نوبت‌ها محاسبه می‌شود.</p></div></div>
+<div id="users" class="tab hidden" data-role="admin"><div class="card"><h2>پشتیبان‌گیری دستی</h2><p class="muted">نسخه پشتیبان در پوشه backups ذخیره می‌شود.</p><button onclick="manualBackup()">ایجاد پشتیبان</button></div><div class="card"><h2>ایجاد حساب جدید</h2><p class="muted">برای پزشک یا پذیرش حساب جداگانه بساز. رمز حداقل ۱۰ نویسه باشد.</p>
+<div class="grid"><div><label>نام و نام خانوادگی</label><input id="uName" autocomplete="off"></div><div><label>نام کاربری انگلیسی</label><input id="uUsername" autocomplete="off" placeholder="مثلاً doctor1"></div><div><label>رمز عبور موقت</label><input id="uPassword" type="password" autocomplete="new-password"></div><div><label>نقش</label><select id="uRole"><option value="doctor">پزشک</option><option value="reception">پذیرش</option></select></div></div>
+<button onclick="createUser()">ساخت حساب</button><div id="userMsg" class="msg hidden"></div></div><div class="card"><h2>حساب‌های سامانه</h2><div id="usersList" class="tablewrap">در حال دریافت...</div></div></div>
+
+<div id="superadminPanel" class="tab hidden" data-role="superadmin">
+  <div class="sa-heading">
+    <div>
+      <h2>مدیریت کل سامانه مطب هوشمند</h2>
+      <p class="muted">مدیریت مراکز، حساب‌ها و دسترسی‌ها</p>
+    </div>
+    <span class="sa-chip">مدیر کل</span>
+  </div>
+
+  <div class="card">
+    <h2>نمای کلی سامانه</h2>
+    <div class="stats">
+      <div class="stat">تعداد مطب‌ها<b id="saClinicCount">۰</b></div>
+      <div class="stat">مطب‌های فعال<b id="saActiveCount">۰</b></div>
+      <div class="stat">کاربران مطب انتخابی<b id="saUserCount">۰</b></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>ایجاد مطب جدید</h2>
+    <label for="saNewClinicName">نام مطب یا مرکز</label>
+    <input id="saNewClinicName" maxlength="100" placeholder="نام مرکز جدید">
+    <button data-sa-action="create-clinic">ایجاد مطب</button>
+    <div id="saClinicCreateMsg" class="msg hidden"></div>
+  </div>
+
+  <div class="card">
+    <h2>انتخاب و مدیریت مطب</h2>
+    <label for="saClinicSelect">مطب موردنظر</label>
+    <select id="saClinicSelect">
+      <option value="">در حال دریافت فهرست...</option>
+    </select>
+    <div id="saClinicDetails" class="sa-detail muted">یک مطب انتخاب کنید.</div>
+    <div id="saClinicActionMsg" class="msg hidden"></div>
+  </div>
+
+  <div class="card">
+    <h2>ایجاد حساب برای مطب انتخابی</h2>
+    <p class="muted">نام کاربری باید در کل سامانه یکتا باشد. رمز حداقل ۱۰ نویسه باشد.</p>
+    <label for="saUserName">نام و نام خانوادگی</label>
+    <input id="saUserName" maxlength="80" autocomplete="off">
+    <label for="saUsername">نام کاربری انگلیسی</label>
+    <input id="saUsername" maxlength="40" autocomplete="off">
+    <label for="saUserPassword">رمز عبور اولیه</label>
+    <input id="saUserPassword" type="password" maxlength="200" autocomplete="new-password">
+    <label for="saUserRole">نقش</label>
+    <select id="saUserRole">
+      <option value="admin">مدیر مطب</option>
+      <option value="doctor">پزشک</option>
+      <option value="reception">پذیرش</option>
+    </select>
+    <button data-sa-action="create-user">ایجاد حساب کاربری</button>
+    <div id="saUserCreateMsg" class="msg hidden"></div>
+  </div>
+
+  <div class="card">
+    <h2>کاربران مطب انتخابی</h2>
+    <div id="saUsersList" class="tablewrap muted">ابتدا یک مطب انتخاب کنید.</div>
+    <div id="saUsersMsg" class="msg hidden"></div>
+  </div>
+</div>
+
+<div id="security" class="tab hidden"><div class="card"><h2>تغییر رمز عبور</h2><div class="grid"><div><label>رمز فعلی</label><input id="oldPassword" type="password" autocomplete="current-password"></div><div><label>رمز جدید (حداقل ۱۰ نویسه)</label><input id="newPassword" type="password" autocomplete="new-password"></div><div><label>تکرار رمز جدید</label><input id="confirmPassword" type="password" autocomplete="new-password"></div></div><button onclick="changePassword()">ثبت رمز جدید</button><div id="securityMsg" class="msg hidden"></div></div></div>
+</section></div>
+<script>
+let token=localStorage.getItem("matabToken")||"", currentUser=null;
+const $=id=>document.getElementById(id);
+async function api(url,opts={}){opts.headers={...(opts.headers||{}),"Content-Type":"application/json",...(token?{Authorization:"Bearer "+token}:{})};const r=await fetch("/api"+url,opts);let d={};try{d=await r.json()}catch{}if(!r.ok)throw Error(d.error||"خطا در ارتباط");return d}
+function msg(id,text){$(id).textContent=text;$(id).classList.remove("hidden")}
+async function login(){try{const d=await api("/login",{method:"POST",body:JSON.stringify({username:$("username").value,password:$("password").value})});token=d.token;localStorage.setItem("matabToken",token);currentUser=d.user;start()}catch(e){msg("loginMsg",e.message)}}
+async function start(){
+  try{
+    const d=await api("/me");
+    currentUser=d.user;
+    $("login").classList.add("hidden");
+    $("app").classList.remove("hidden");
+    $("who").textContent=currentUser.name+" — "+roleFa(currentUser.role);
+    document.querySelectorAll("[data-role]").forEach(el=>{
+      el.classList.toggle("hidden",!el.dataset.role.split(",").includes(currentUser.role));
+    });
+    if(currentUser.role==="superadmin"){
+      showTab("superadminPanel");
+      await loadSuperadminClinics();
+    }else{
+      showTab("home");
+      await refresh();
+    }
+  }catch(e){
+    token="";
+    localStorage.removeItem("matabToken");
+    $("app").classList.add("hidden");
+    $("login").classList.remove("hidden");
+    msg("loginMsg",e.message);
+  }
+}
+function roleFa(r){return ({admin:"مدیر مطب",doctor:"پزشک",reception:"پذیرش",superadmin:"مدیر کل سامانه"})[r]||r}
+async function logout(){try{await api("/logout",{method:"POST"})}catch{}token="";localStorage.removeItem("matabToken");location.reload()}
+function showTab(id){const target=$(id);if(!target)return;document.querySelectorAll(".tab").forEach(x=>x.classList.add("hidden"));target.classList.remove("hidden");if(id==="appointments")loadAppointments();if(id==="patients")loadPatients();if(id==="users")loadUsers();if(id==="calendar")loadCalendar();if(id==="reports")loadReports();if(id==="superadminPanel"&&currentUser?.role==="superadmin")loadSuperadminClinics()}
+async function refresh(){const d=await api("/dashboard");$("sPatients").textContent=d.patients;$("sAppointments").textContent=d.appointments;$("sToday").textContent=d.today;$("upcoming").innerHTML=d.upcoming.length?table(d.upcoming,false):"هنوز نوبتی ثبت نشده است."}
+function table(rows,actions){if(!rows.length)return "موردی ثبت نشده است.";return `<div class="table-scroll"><table><thead><tr><th>نام</th><th>تماس</th><th>تاریخ</th><th>ساعت</th><th>خدمت</th><th>وضعیت</th>${actions?"<th>عملیات</th>":""}</tr></thead><tbody>${rows.map(a=>`<tr><td>${esc(a.patientName)}</td><td>${esc(a.phone)}</td><td>${esc(a.date)}</td><td>${esc(a.time)}</td><td>${esc(a.service)}</td><td>${esc(a.status)}</td>${actions?`<td><select onchange="setStatus(${a.id},this.value)"><option>ثبت شده</option><option>مراجعه کرد</option><option>لغو شده</option></select></td>`:""}</tr>`).join("")}</tbody></table></div>`}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+async function addAppointment(){try{await api("/appointments",{method:"POST",body:JSON.stringify({patientName:$("aName").value,phone:$("aPhone").value,date:$("aDate").value,time:$("aTime").value,service:$("aService").value,amount:$("aAmount").value,paymentStatus:$("aPayment").value})});msg("bookingMsg","نوبت با موفقیت ثبت شد.");["aName","aPhone","aDate","aTime","aAmount"].forEach(x=>$(x).value="");await refresh()}catch(e){msg("bookingMsg",e.message)}}
+async function loadAppointments(){const a=await api("/appointments");$("appointmentsList").innerHTML=table(a,currentUser.role==="admin")}
+async function setStatus(id,status){try{await api("/appointments/"+id,{method:"PATCH",body:JSON.stringify({status})});await loadAppointments();await refresh()}catch(e){alert(e.message)}}
+async function addPatient(){try{await api("/patients",{method:"POST",body:JSON.stringify({name:$("pName").value,phone:$("pPhone").value,nationalId:$("pNational").value,notes:$("pNotes").value,medicalHistory:$("pHistory").value,allergies:$("pAllergies").value,medications:$("pMeds").value})});msg("patientMsg","اطلاعات بیمار ذخیره شد.");["pName","pPhone","pNational","pNotes","pHistory","pAllergies","pMeds"].forEach(x=>$(x).value="");await loadPatients();await refresh()}catch(e){msg("patientMsg",e.message)}}
+async function loadPatients(){const a=await api("/patients");$("patientsList").innerHTML=a.length?`<table><thead><tr><th>نام</th><th>شماره تماس</th><th>کد ملی</th><th>پرونده</th></tr></thead><tbody>${a.map(p=>`<tr><td>${esc(p.name)}</td><td>${esc(p.phone)}</td><td>${esc(p.nationalId||"-")}</td><td><button class="secondary" onclick="patientRecord(${p.id})">مشاهده / ثبت مراجعه</button></td></tr>`).join("")}</tbody></table><div id="patientRecord"></div>`:"هنوز بیماری ثبت نشده است."}
+async function patientRecord(id){const a=await api("/patients"),p=a.find(x=>x.id===id);if(!p)return;const visits=p.visits||[];$("patientRecord").innerHTML=`<div class="card"><h2>پرونده: ${esc(p.name)}</h2><div class="grid"><div><label>سابقه پزشکی</label><textarea id="rHistory" rows="3">${esc(p.medicalHistory||"")}</textarea></div><div><label>حساسیت‌ها</label><textarea id="rAllergies" rows="3">${esc(p.allergies||"")}</textarea></div><div><label>داروهای مصرفی</label><textarea id="rMeds" rows="3">${esc(p.medications||"")}</textarea></div><div><label>یادداشت</label><textarea id="rNotes" rows="3">${esc(p.notes||"")}</textarea></div></div><button onclick="saveRecord(${p.id})">ذخیره پرونده</button><hr><h2>ثبت شرح مراجعه</h2><textarea id="visitNote" rows="3" placeholder="شرح مراجعه، اقدامات و توصیه‌ها"></textarea><button onclick="addVisit(${p.id})">ثبت مراجعه</button><h2 style="margin-top:18px">سوابق مراجعات</h2>${visits.length?visits.slice().reverse().map(v=>`<p class="msg"><b>${esc(v.date)}</b> — ${esc(v.doctor||"")}<br>${esc(v.note)}</p>`).join(""):"هنوز مراجعه‌ای ثبت نشده است."}</div>`}
+async function saveRecord(id){try{await api("/patients/"+id,{method:"PATCH",body:JSON.stringify({medicalHistory:$("rHistory").value,allergies:$("rAllergies").value,medications:$("rMeds").value,notes:$("rNotes").value})});alert("پرونده ذخیره شد.");await loadPatients()}catch(e){alert(e.message)}}
+async function addVisit(id){try{await api("/patients/"+id+"/visits",{method:"POST",body:JSON.stringify({note:$("visitNote").value})});await patientRecord(id)}catch(e){alert(e.message)}}
+async function loadCalendar(){const month=$("calMonth").value||new Date().toISOString().slice(0,7);$("calMonth").value=month;const a=await api("/calendar?month="+encodeURIComponent(month));$("calendarList").innerHTML=a.length?`<table><thead><tr><th>تاریخ</th><th>ساعت</th><th>بیمار</th><th>خدمت</th><th>وضعیت</th></tr></thead><tbody>${a.map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.time)}</td><td>${esc(x.patientName)}</td><td>${esc(x.service)}</td><td>${esc(x.status)}</td></tr>`).join("")}</tbody></table>`:"برای این ماه نوبتی ثبت نشده است."}
+async function loadReports(){try{const d=await api("/reports?from="+encodeURIComponent($("reportFrom").value||"0000-01-01")+"&to="+encodeURIComponent($("reportTo").value||"9999-12-31"));$("reportSummary").innerHTML=[["کل بیماران",d.patients],["نوبت‌ها",d.appointments],["مراجعه‌شده",d.visited],["لغوشده",d.cancelled],["دریافتی (تومان)",d.paid.toLocaleString("fa-IR")],["پرداخت‌نشده (تومان)",d.unpaid.toLocaleString("fa-IR")]].map(x=>`<div class="stat">${x[0]}<b>${x[1]}</b></div>`).join("");$("reportRows").innerHTML=d.rows.length?`<table><thead><tr><th>تاریخ</th><th>بیمار</th><th>مبلغ</th><th>پرداخت</th><th>وضعیت</th></tr></thead><tbody>${d.rows.map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.patientName)}</td><td>${(Number(x.amount)||0).toLocaleString("fa-IR")}</td><td>${esc(x.paymentStatus||"پرداخت نشده")}</td><td>${esc(x.status)}</td></tr>`).join("")}</tbody></table>`:"نوبتی در بازه انتخابی وجود ندارد."}catch(e){alert(e.message)}}
+async function manualBackup(){try{const d=await api("/backup");alert("نسخه پشتیبان ساخته شد: "+d.name)}catch(e){alert(e.message)}}
+async function loadUsers(){try{const a=await api("/users");$("usersList").innerHTML=a.length?`<table><thead><tr><th>نام</th><th>نام کاربری</th><th>نقش</th><th>وضعیت</th></tr></thead><tbody>${a.map(u=>`<tr><td>${esc(u.name)}</td><td>${esc(u.username)}</td><td>${roleFa(u.role)}</td><td>${u.active?"فعال":"غیرفعال"}</td></tr>`).join("")}</tbody></table>`:"حسابی وجود ندارد."}catch(e){$("usersList").textContent=e.message}}
+async function createUser(){try{const d=await api("/users",{method:"POST",body:JSON.stringify({name:$("uName").value,username:$("uUsername").value,password:$("uPassword").value,role:$("uRole").value})});msg("userMsg","حساب "+d.username+" با موفقیت ساخته شد.");["uName","uUsername","uPassword"].forEach(x=>$(x).value="");await loadUsers()}catch(e){msg("userMsg",e.message)}}
+async function changePassword(){const p=$("newPassword").value;if(p!==$("confirmPassword").value){msg("securityMsg","تکرار رمز جدید یکسان نیست.");return}try{await api("/change-password",{method:"POST",body:JSON.stringify({oldPassword:$("oldPassword").value,newPassword:p})});msg("securityMsg","رمز با موفقیت تغییر کرد. لطفاً از حساب خارج و دوباره وارد شو.");["oldPassword","newPassword","confirmPassword"].forEach(x=>$(x).value="")}catch(e){msg("securityMsg",e.message)}}
+
+/* MATAB_SUPERADMIN_UI_V2 */
+let saClinics=[];
+let saSelectedClinicId="";
+
+function saText(id,value){
+  const el=$(id);
+  if(!el)return;
+  el.textContent=value;
+  el.classList.remove("hidden");
+}
+function saHide(id){
+  const el=$(id);
+  if(el)el.classList.add("hidden");
+}
+function saRoleName(role){
+  return ({admin:"مدیر مطب",doctor:"پزشک",reception:"پذیرش"})[role]||role;
+}
+
+async function loadSuperadminClinics(){
+  if(!currentUser||currentUser.role!=="superadmin")return;
+  try{
+    const data=await api("/superadmin/clinics");
+    saClinics=Array.isArray(data)?data:[];
+    $("saClinicCount").textContent=saClinics.length.toLocaleString("fa-IR");
+    $("saActiveCount").textContent=saClinics.filter(c=>c.active).length.toLocaleString("fa-IR");
+
+    const select=$("saClinicSelect");
+    const previous=saSelectedClinicId;
+    select.innerHTML='<option value="">انتخاب مطب...</option>'+
+      saClinics.map(c=>'<option value="'+esc(c.id)+'">'+esc(c.name)+(c.active?"":" (غیرفعال)")+'</option>').join("");
+
+    if(saClinics.some(c=>String(c.id)===String(previous)))select.value=previous;
+    else if(saClinics.length)select.value=saClinics[0].id;
+
+    saSelectedClinicId=select.value||"";
+    await renderSuperadminClinic();
+  }catch(e){saText("saClinicActionMsg",e.message);}
+}
+
+async function renderSuperadminClinic(){
+  const clinic=saClinics.find(c=>String(c.id)===String(saSelectedClinicId));
+  if(!clinic){
+    $("saClinicDetails").textContent="هنوز مطبی ثبت نشده است.";
+    $("saUserCount").textContent="۰";
+    $("saUsersList").textContent="مطب انتخاب نشده است.";
+    return;
+  }
+
+  $("saClinicDetails").innerHTML=
+    '<div class="grid">'+
+    '<div><label>نام مطب</label><input id="saRenameClinic" maxlength="100" value="'+esc(clinic.name)+'"></div>'+
+    '<div><label>شناسه مطب</label><input readonly value="'+esc(clinic.id)+'"></div>'+
+    '<div><label>وضعیت</label><p><span class="sa-status '+(clinic.active?"":"off")+'">'+(clinic.active?"فعال":"غیرفعال")+'</span></p></div>'+
+    '<div><label>تعداد کاربران فعال</label><p><b>'+Number(clinic.userCount||0).toLocaleString("fa-IR")+'</b></p></div>'+
+    '</div><div class="sa-actions">'+
+    '<button data-sa-action="rename-clinic">ذخیره نام مطب</button>'+
+    '<button class="'+(clinic.active?"danger":"secondary")+'" data-sa-action="toggle-clinic">'+(clinic.active?"غیرفعال‌کردن مطب":"فعال‌کردن مطب")+'</button>'+
+    '</div>';
+
+  await loadSuperadminUsers();
+}
+
+async function loadSuperadminUsers(){
+  if(!saSelectedClinicId)return;
+  try{
+    const users=await api("/superadmin/clinics/"+encodeURIComponent(saSelectedClinicId)+"/users");
+    $("saUserCount").textContent=users.length.toLocaleString("fa-IR");
+    if(!users.length){
+      $("saUsersList").textContent="برای این مطب هنوز حسابی ساخته نشده است.";
+      return;
+    }
+    $("saUsersList").innerHTML=
+      '<table><thead><tr><th>نام</th><th>نام کاربری</th><th>نقش</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>'+
+      users.map(u=>
+        '<tr data-user-row="'+esc(u.id)+'">'+
+        '<td>'+esc(u.name)+'</td><td>'+esc(u.username)+'</td>'+
+        '<td><select data-user-role>'+["admin","doctor","reception"].map(r=>
+          '<option value="'+r+'" '+(u.role===r?"selected":"")+'>'+saRoleName(r)+'</option>').join("")+'</select></td>'+
+        '<td><label><input type="checkbox" data-user-active style="width:auto" '+(u.active?"checked":"")+'>'+(u.active?"فعال":"غیرفعال")+'</label></td>'+
+        '<td><div class="sa-actions"><button data-sa-action="save-user" data-user-id="'+esc(u.id)+'">ذخیره</button><button class="danger" data-sa-action="remove-membership" data-user-id="'+esc(u.id)+'">حذف از این مطب</button></div></td>'+
+        '</tr>'
+      ).join("")+'</tbody></table>';
+  }catch(e){$("saUsersList").textContent=e.message;}
+}
+
+async function createSuperadminClinic(){
+  const name=$("saNewClinicName").value.trim();
+  try{
+    const d=await api("/superadmin/clinics",{
+      method:"POST",body:JSON.stringify({name})
+    });
+    $("saNewClinicName").value="";
+    saText("saClinicCreateMsg","مطب جدید با موفقیت ایجاد شد.");
+    await loadSuperadminClinics();
+    if(d.clinic&&d.clinic.id){
+      saSelectedClinicId=d.clinic.id;
+      $("saClinicSelect").value=saSelectedClinicId;
+      await renderSuperadminClinic();
+    }
+  }catch(e){saText("saClinicCreateMsg",e.message);}
+}
+
+async function renameSuperadminClinic(){
+  const clinic=saClinics.find(c=>String(c.id)===String(saSelectedClinicId));
+  if(!clinic)return;
+  try{
+    await api("/superadmin/clinics/"+encodeURIComponent(clinic.id),{
+      method:"PATCH",
+      body:JSON.stringify({name:$("saRenameClinic").value.trim()})
+    });
+    saText("saClinicActionMsg","نام مطب به‌روزرسانی شد.");
+    await loadSuperadminClinics();
+  }catch(e){saText("saClinicActionMsg",e.message);}
+}
+
+async function toggleSuperadminClinic(){
+  const clinic=saClinics.find(c=>String(c.id)===String(saSelectedClinicId));
+  if(!clinic)return;
+  const next=!clinic.active;
+  if(!confirm(next?"مطب فعال شود؟":"مطب غیرفعال شود؟ نشست کاربران این مطب فوراً باطل خواهد شد."))return;
+  try{
+    await api("/superadmin/clinics/"+encodeURIComponent(clinic.id),{
+      method:"PATCH",body:JSON.stringify({active:next})
+    });
+    saText("saClinicActionMsg",next?"مطب فعال شد.":"مطب غیرفعال شد و نشست کاربران آن باطل شد.");
+    await loadSuperadminClinics();
+  }catch(e){saText("saClinicActionMsg",e.message);}
+}
+
+async function createSuperadminUser(){
+  if(!saSelectedClinicId){
+    saText("saUserCreateMsg","ابتدا یک مطب انتخاب کنید.");
+    return;
+  }
+  const body={
+    name:$("saUserName").value.trim(),
+    username:$("saUsername").value.trim(),
+    password:$("saUserPassword").value,
+    role:$("saUserRole").value
+  };
+  try{
+    await api("/superadmin/clinics/"+encodeURIComponent(saSelectedClinicId)+"/users",{
+      method:"POST",body:JSON.stringify(body)
+    });
+    ["saUserName","saUsername","saUserPassword"].forEach(id=>$(id).value="");
+    saText("saUserCreateMsg","حساب کاربری با موفقیت ساخته شد.");
+    await renderSuperadminClinic();
+  }catch(e){saText("saUserCreateMsg",e.message);}
+}
+
+async function saveSuperadminUser(id,row){
+  const role=row.querySelector("[data-user-role]").value;
+  const active=row.querySelector("[data-user-active]").checked;
+  try{
+    await api("/superadmin/users/"+encodeURIComponent(id),{
+      method:"PATCH",body:JSON.stringify({role,active})
+    });
+    saText("saUsersMsg","تغییرات حساب کاربر ذخیره شد.");
+    await renderSuperadminClinic();
+  }catch(e){saText("saUsersMsg",e.message);}
+}
+
+async function removeSuperadminMembership(id){
+  if(!confirm("این کاربر از عضویت همین مطب خارج شود؟"))return;
+  try{
+    await api("/superadmin/users/"+encodeURIComponent(id)+"/membership",{
+      method:"PATCH",
+      body:JSON.stringify({clinicId:saSelectedClinicId,active:false})
+    });
+    saText("saUsersMsg","عضویت کاربر در این مطب حذف شد.");
+    await renderSuperadminClinic();
+    await loadSuperadminClinics();
+  }catch(e){saText("saUsersMsg",e.message);}
+}
+
+$("saClinicSelect").addEventListener("change",async()=>{
+  saSelectedClinicId=$("saClinicSelect").value;
+  saHide("saClinicActionMsg");
+  saHide("saUsersMsg");
+  await renderSuperadminClinic();
+});
+
+$("superadminPanel").addEventListener("click",async event=>{
+  const button=event.target.closest("[data-sa-action]");
+  if(!button)return;
+  const action=button.dataset.saAction;
+  button.disabled=true;
+  try{
+    if(action==="create-clinic")await createSuperadminClinic();
+    else if(action==="rename-clinic")await renameSuperadminClinic();
+    else if(action==="toggle-clinic")await toggleSuperadminClinic();
+    else if(action==="create-user")await createSuperadminUser();
+    else if(action==="save-user"){
+      await saveSuperadminUser(button.dataset.userId,button.closest("[data-user-row]"));
+    }else if(action==="remove-membership"){
+      await removeSuperadminMembership(button.dataset.userId);
+    }
+  }finally{button.disabled=false;}
+});
+
+$("calMonth").addEventListener("change",loadCalendar);if(token)start();
+</script></body></html>
